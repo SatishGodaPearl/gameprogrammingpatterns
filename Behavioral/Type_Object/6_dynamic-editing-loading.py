@@ -91,6 +91,7 @@ class Breed(object):
         monster = Monster(breed)
         return monster
 
+
 if __name__ == '__main__':
     breeds_data = {
         "Troll": {
@@ -109,9 +110,11 @@ if __name__ == '__main__':
         }
     }
 
-
+    # Breeds{} -> name: Breed(name, health, attack)
     breeds = {}
 
+    # Pass 1: Build the Breed instances using the name, health and attack properties
+    # Parenting relationships will be setup in the second pass
     for name, data in breeds_data.iteritems():
         health = data.get('health')
         attack = data.get('attack')
@@ -119,6 +122,7 @@ if __name__ == '__main__':
         breeds[name] = breed
 
 
+    # Pass 2: Set up the parenting relationships
     for name, data in breeds_data.iteritems():
         parent_name = data.get('parent')
         if not parent_name:
@@ -126,7 +130,10 @@ if __name__ == '__main__':
 
         parent = breeds.get(parent_name)
         child = breeds.get(name)
+
         child.setParent(parent)
+
+    # Breed instances are now ready to be used.
 
     print breeds
     breeds.get('Troll Archer')
